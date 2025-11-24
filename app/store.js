@@ -1,10 +1,10 @@
 
 import {configureStore} from "@reduxjs/toolkit";
-import todos from "../features/todoSlice";
+import lyrics from "../features/lyricSlice";
 // Export result of configure store and pass into a reducer that contains "todos" reducer
 
 export default configureStore({
   reducer: {
-    todos
+    lyrics
   },
 })

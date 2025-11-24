@@ -1,28 +1,30 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getTodosThunk } from '../features/todoSlice';
+import SongChoice from "../Components/songChoice";
 
-function songSelectionScreen(props) {
 
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getTodosThunk());
-  }, []);
+// Song
+import { Lilac } from "../Songs/Lilac";
+import { SpringOfLife } from "../Songs/springOfLife";
+import { PrayerX } from "../Songs/PrayerX";
+import { RightNow } from "../Songs/rightNow";
+import { Sakuranbo } from "../Songs/sakuranbo";
 
-  const songSelections = useSelector((state) =>  state.todos.value);
+const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
+function SongSelectionScreen(props) {
 
-  const { navigation, route } = props;
+  const { navigation} = props;
 
   return(
     <View style={styles.container}>
-      <View style={styles.listContainer}>
+      <View>
         <FlatList
           data={songSelections}
           renderItem={({item})=>{
             return (
-              <SongChoice item={item} navigation={navigation} />
+              <SongChoice
+              title = {item.title}
+              albumArt = {item.albumArt}
+              />
             );
           }}
         />
@@ -40,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default songSelectionScreen;
+export default SongSelectionScreen;

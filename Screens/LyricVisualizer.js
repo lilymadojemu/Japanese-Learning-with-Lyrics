@@ -2,22 +2,21 @@ import { getLyrics, getSong } from 'genius-lyrics-api';
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getTodosThunk } from '../features/todoSlice';
+// import { getTodosThunk } from '../features/todoSlice';
+import kuromoji from "react-native-kuromoji";
 
-
-const options = {
-	apiKey: 'QK8DV8Uyhb3D6wmXlfbPHty044gTUukThEN_Gz4xktMgG9s6XPH2_TAnUo6lMvTq',
-	title: 'Posthumous Forgiveness',
-	artist: 'Tame Impala',
-	optimizeQuery: true
-};
-
-getLyrics(options).then((lyrics) => console.log(lyrics));
-
-getSong(options).then((song) =>
-	console.log(`${song.id} - ${song.title} - ${song.url} - ${song.albumArt} - ${song.lyrics}`)
-);
-
+export function loadTokenizer() {
+  return new Promise((resolve, reject) => {
+    kuromoji
+      .builder({
+        dicPath: "./assets/dict"   // relative path inside project
+      })
+      .build((err, tokenizer) => {
+        if (err) reject(err);
+        else resolve(tokenizer);
+      });
+  });
+}
 
 function LyricVisualizerScreen(props) {
 
@@ -32,7 +31,8 @@ function LyricVisualizerScreen(props) {
   const listItems = useSelector((state) =>  state.todos.value);
 
   const { navigation, route } = props;
-
+  // loop through each character/word in a sentence
+  // Once you press character/word in 
   return(
     <View style={styles.container}>
       <View style={styles.listContainer}>

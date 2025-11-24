@@ -1,7 +1,7 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getLyricsThunk } from '../features/lyrlice';
+// import { getLyricsThunk } from '../features/lyrlice';
 
 function VocabReviewScreen(props) {
 
