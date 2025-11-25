@@ -1,4 +1,4 @@
- import PrayerXCover from "../Album_Art/PrayerX_Album_Art.png"
+import PrayerXCover from "../Album_Art/PrayerX_Album_Art.png"
  
 export const PrayerX = {"title": "PrayerX",
   "artist": "King Gnu",

@@ -3,20 +3,6 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 // import { getTodosThunk } from '../features/todoSlice';
-import kuromoji from "react-native-kuromoji";
-
-export function loadTokenizer() {
-  return new Promise((resolve, reject) => {
-    kuromoji
-      .builder({
-        dicPath: "./assets/dict"   // relative path inside project
-      })
-      .build((err, tokenizer) => {
-        if (err) reject(err);
-        else resolve(tokenizer);
-      });
-  });
-}
 
 function LyricVisualizerScreen(props) {
 

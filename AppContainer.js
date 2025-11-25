@@ -1,4 +1,3 @@
-// Stack Navigator
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,24 +14,28 @@ const Stack = createNativeStackNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
-      <FontAwesome name="home" size={24} color="black" />
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+          if (route.name === 'SongSelect') iconName = 'music';
+          else if (route.name === 'VocabReview') iconName = 'book';
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
       <Tab.Screen name='SongSelect' component={SongSelectionScreen}/>
       <Tab.Screen name='VocabReview' component={VocabReviewScreen}/>
     </Tab.Navigator>
   );
 }
+
 function AppContainer() {
   return( 
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName='SongSelect' 
-          screenOptions={
-            { 
-              title: 'Lyric Study',
-            }}>
-          <Stack.Screen name='Tabs' component={MyTabs}/>
+        <Stack.Navigator initialRouteName='Tabs' screenOptions={{ title: 'Lyric Study' }}>
+          <Stack.Screen name='Tabs' component={MyTabs} options={{ headerShown: false }} />
           <Stack.Screen name='LyricsView' component={LyricVisualizerScreen}/>
         </Stack.Navigator>
       </NavigationContainer>

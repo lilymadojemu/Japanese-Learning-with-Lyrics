@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import lyrics from "../features/lyricSlice";
-import flashcards from "../features/flashcardSlice";
+import lyrics from "../Features/lyricSlice";
+import flashcards from "../Features/flashcardSlice";
 
 export default configureStore({
   reducer: {
     lyrics,
-    flashcards
-  },
+    flashcards,
+  }
 });

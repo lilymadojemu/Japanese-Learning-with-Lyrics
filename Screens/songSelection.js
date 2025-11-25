@@ -1,7 +1,6 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import SongChoice from "../Components/songChoice";
 
-
 // Song
 import { Lilac } from "../Songs/Lilac";
 import { SpringOfLife } from "../Songs/springOfLife";
@@ -10,9 +9,11 @@ import { RightNow } from "../Songs/rightNow";
 import { Sakuranbo } from "../Songs/sakuranbo";
 
 const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
+
 function SongSelectionScreen(props) {
 
   const { navigation} = props;
+  // console.log("Screen:" + songSelections)
 
   return(
     <View style={styles.container}>
@@ -21,9 +22,7 @@ function SongSelectionScreen(props) {
           data={songSelections}
           renderItem={({item})=>{
             return (
-              <SongChoice
-              title = {item.title}
-              albumArt = {item.albumArt}
+              <SongChoice item={item} navigation={navigation}
               />
             );
           }}
