@@ -13,7 +13,6 @@ const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
 function SongSelectionScreen(props) {
 
   const { navigation} = props;
-  // console.log("Screen:" + songSelections)
 
   return(
     <View style={styles.container}>

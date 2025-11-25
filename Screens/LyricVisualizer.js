@@ -1,45 +1,32 @@
-import { getLyrics, getSong } from 'genius-lyrics-api';
-import { StyleSheet, View, FlatList } from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-// import { getTodosThunk } from '../features/todoSlice';
+import { StyleSheet, View, FlatList, Text, TouchableOpacity } from "react-native";
+import LyricLine from "../Components/lyricLine";
+
+// Songs
+import { Lilac } from "../Songs/Lilac";
+import { SpringOfLife } from "../Songs/springOfLife";
+import { PrayerX } from "../Songs/PrayerX";
+import { RightNow } from "../Songs/rightNow";
+import { Sakuranbo } from "../Songs/sakuranbo";
+
+const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
 
 function LyricVisualizerScreen(props) {
+  const { route, navigation } = props;
+  const { song } = route.params;
 
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getTodosThunk());
-  }, []);
-
-//   API Nonsense
-
-  const listItems = useSelector((state) =>  state.todos.value);
-
-  const { navigation, route } = props;
+  console.log (song)
   // loop through each character/word in a sentence
   // Once you press character/word in 
   return(
     <View style={styles.container}>
       <View style={styles.listContainer}>
-        <FlatList
-          data={listItems}
-          renderItem={({item})=>{
-            return (
-              <ListItem item={item} navigation={navigation} />
-            );
-          }}
-        />
-      </View>
-      <FAB
-        title='Add'
-        color='darkblue'
-        onPress={()=>{
-          navigation.navigate('Details', {
-            item: {key: -1, text: ''}
-          });
-        }}
+      <FlatList
+        data={song.lyrics}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) =>     <LyricLine line={item} navigation={navigation} />
+}
       />
+      </View>
     </View>
   );
 }
