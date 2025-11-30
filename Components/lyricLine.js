@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { addFlashcardThunk } from '../Features/flashcardSlice';
 
 // Simple offline tokenizer
 function tokenizeJapanese(text) {
@@ -16,7 +17,10 @@ function tokenizeJapanese(text) {
 }
 
 function LyricLine({ line }) {
+  // Individualizes Lyrics to sensible Japanese words (mostly)
   const [tokens, setTokens] = useState([]);
+  // Translation for each word the user presses
+  const [translation, setTranslation] = useState(null);
 
   useEffect(() => {
     setTokens(tokenizeJapanese(line));
@@ -26,32 +30,35 @@ function LyricLine({ line }) {
 
   return (
     <View style={styles.lineContainer}>
+      {translation && (
+        <Text style={styles.translationText}>
+          {translation}
+        </Text>
+      )}
       {tokens.map((word, i) => (
         <TouchableOpacity
           key={i}
           onPress={async () => {
             try {
-              const raw = await res.text();
-              console.log(raw);
-              const res = await fetch("https://libretranslate.com/translater", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  q: word,
-                  source: "ja",
-                  target: "en",
-                  format: "text",
-                }),
-              });
+              const url = `https://api.mymemory.translated.net/get?q=${word}&langpair=ja|en`;
 
+              const res = await fetch(url);
               const data = await res.json();
-              console.log("Translation:", data.translatedText);
+
+              const translatedWord = data.responseData.translatedText;
+
+              console.log("Translation:", translatedWord);
+
+              setTranslation(translatedWord);
 
             } catch (err) {
               console.error("Translation error:", err);
             }
           }}
-          onLongPress={() => console.log("Save to flashcards:", word)}
+          onLongPress={() => {
+            console.log("Save to flashcards:", word)
+            dispatch(addFlashcardThunk(word))
+          }}
         >
           <Text style={styles.word}>{word}</Text>
         </TouchableOpacity>

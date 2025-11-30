@@ -16,7 +16,7 @@ function SongChoice(props) {
 
   return (
     <View style={styles.listItemContainer}>
-        <ImageBackground source={item.albumArt} style={{ width: 50, height: 50 }} imageStyle={{resizeMode: 'stretch'}}> </ImageBackground>
+      {/* <ImageBackground source={item.albumArt} style={{ width: 50, height: 50 }} imageStyle={{resizeMode: 'stretch'}}> </ImageBackground> */}
       <TouchableOpacity onPress={() => navigation.navigate('LyricsView', { song: item })}> 
          <Text>{item.title}</Text>
     </TouchableOpacity>

@@ -24,7 +24,6 @@ export const getFlashcardsThunk = createAsyncThunk(
     const collRef = collection(db, 'flashcards');
     const q = query(collRef);
     const querySnapshot = await getDocs(q);
-
     querySnapshot.docs.forEach((docSnapshot) => {
       const flashcard = docSnapshot.data();
       flashcard.key = docSnapshot.id;
