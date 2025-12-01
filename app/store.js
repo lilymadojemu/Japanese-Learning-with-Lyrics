@@ -3,6 +3,6 @@ import flashcards from "../Features/flashcardSlice";
 
 export default configureStore({
   reducer: {
-    flashcards,
+    flashcards
   }
 });

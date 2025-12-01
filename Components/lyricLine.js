@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { addFlashcardThunk } from '../Features/flashcardSlice';
+import { useDispatch } from 'react-redux';
+
 
 // Simple offline tokenizer
 function tokenizeJapanese(text) {
@@ -21,6 +23,8 @@ function LyricLine({ line }) {
   const [tokens, setTokens] = useState([]);
   // Translation for each word the user presses
   const [translation, setTranslation] = useState(null);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     setTokens(tokenizeJapanese(line));

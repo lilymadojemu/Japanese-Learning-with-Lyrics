@@ -34,22 +34,19 @@ export const getFlashcardsThunk = createAsyncThunk(
   }
 );
 
-// ADD a flashcard
+// Add a flashcard
 export const addFlashcardThunk = createAsyncThunk(
   'flashcards/addFlashcard',
   async (flashcardText) => {
     const collRef = collection(db, 'flashcards');
     const snap = await addDoc(collRef, { 
       text: flashcardText,
-      time: null,
-      suspendedUntil: null
+
     });
 
     return { 
       key: snap.id, 
-      text: flashcardText,
-      time: null,
-      suspendedUntil: null
+      text: flashcardText
     };
   }
 );

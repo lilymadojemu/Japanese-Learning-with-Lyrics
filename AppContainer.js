@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import LyricVisualizerScreen from './Screens/lyricVisualizer';
 import SongSelectionScreen from './Screens/songSelection';
-import VocabReviewScreen from './Screens/vocabReview'
+import VocabReviewScreen from './Screens/vocabReview';
 import store from './app/store';
 
 const Tab = createBottomTabNavigator();

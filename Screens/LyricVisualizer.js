@@ -1,5 +1,10 @@
 import { StyleSheet, View, FlatList, Text, TouchableOpacity } from "react-native";
 import LyricLine from "../Components/lyricLine";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
+import { CLIENT_ID, CLIENT_SECRET } from "../Secrets";
 
 // Songs
 import { Lilac } from "../Songs/Lilac";
@@ -23,10 +28,36 @@ function LyricVisualizerScreen(props) {
       <FlatList
         data={song.lyrics}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) =>     <LyricLine line={item} navigation={navigation} />
-}
+        renderItem={({ item }) =>     <LyricLine line={item} navigation={navigation} />}
       />
       </View>
+      {/* Previous Song in List*/}
+      <TouchableOpacity>
+        <MaterialCommunityIcons name="skip-previous" size={24} color="black" />
+      </TouchableOpacity>
+      {/* onPress fetch song from api */}
+     <TouchableOpacity onPress={async () => {
+            {
+              const url = `https://api.spotify.com/v1/search
+`;
+
+              const res = await fetch(url);
+              const data = await res.json();
+
+              const translatedWord = data.responseData.translatedText;
+
+              console.log("Translation:", translatedWord);
+
+              setTranslation(translatedWord);
+
+            }
+          }}>
+          <FontAwesome name="play" size={24} color="black" />
+      </TouchableOpacity>
+      {/* Next Song in List*/}
+      <TouchableOpacity>
+          <AntDesign name="forward" size={24} color="black" />    
+      </TouchableOpacity>
     </View>
   );
 }
