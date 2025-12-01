@@ -38,15 +38,19 @@ export const getFlashcardsThunk = createAsyncThunk(
 export const addFlashcardThunk = createAsyncThunk(
   'flashcards/addFlashcard',
   async (flashcardText) => {
+    const timeStamp = Date.now();
     const collRef = collection(db, 'flashcards');
     const snap = await addDoc(collRef, { 
       text: flashcardText,
-
+      time: timeStamp,
+      suspendedUntil: null
     });
 
     return { 
       key: snap.id, 
-      text: flashcardText
+      text: flashcardText,
+      time: timeStamp,
+      suspendedUntil: null
     };
   }
 );
