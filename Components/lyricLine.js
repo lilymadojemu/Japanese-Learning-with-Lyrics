@@ -43,7 +43,7 @@ function LyricLine({ line }) {
         <TouchableOpacity
           key={i}
           onPress={async () => {
-            try {
+          
               const url = `https://api.mymemory.translated.net/get?q=${word}&langpair=ja|en`;
 
               const res = await fetch(url);
@@ -55,9 +55,6 @@ function LyricLine({ line }) {
 
               setTranslation(translatedWord);
 
-            } catch (err) {
-              console.error("Translation error:", err);
-            }
           }}
           onLongPress={() => {
             console.log("Save to flashcards:", word)

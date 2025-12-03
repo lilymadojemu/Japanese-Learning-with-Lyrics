@@ -43,19 +43,23 @@ export const addFlashcardThunk = createAsyncThunk(
     const snap = await addDoc(collRef, { 
       text: flashcardText,
       time: timeStamp,
-      suspendedUntil: null
+      suspendedUntil: null,
+      furigana: null,
+      englishText: null
     });
 
     return { 
       key: snap.id, 
       text: flashcardText,
       time: timeStamp,
-      suspendedUntil: null
+      suspendedUntil: null,
+      furigana: null,
+      englishText: null
     };
   }
 );
 
-// SUSPEND a flashcard (hide 24hrs)
+// SUSPEND a flashcard (hide 24hrs) <-- Not Priority Flashcard Customization
 export const suspendFlashcardThunk = createAsyncThunk(
   'flashcards/suspendFlashcard',
   async (flashcard) => {
