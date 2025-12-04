@@ -7,11 +7,13 @@ import { Provider } from 'react-redux';
 import LyricVisualizerScreen from './Screens/lyricVisualizer';
 import SongSelectionScreen from './Screens/songSelection';
 import VocabReviewScreen from './Screens/vocabReview';
+import LoginScreen from './Screens/logIn'
 import store from './app/store';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+// Bottom Navigation Tabs
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -35,6 +37,7 @@ function AppContainer() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Tabs' screenOptions={{ title: 'Lyric Study' }}>
+          <Stack.Screen name='Login' component={LoginScreen}/>
           <Stack.Screen name='Tabs' component={MyTabs} options={{ headerShown: false }} />
           <Stack.Screen name='LyricsView' component={LyricVisualizerScreen}/>
         </Stack.Navigator>
