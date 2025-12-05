@@ -1,40 +1,61 @@
-
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
-import { Lilac } from "../Songs/Lilac";
-import { SpringOfLife } from "../Songs/springOfLife";
-import { PrayerX } from "../Songs/PrayerX";
-import { RightNow } from "../Songs/rightNow";
-import { Sakuranbo } from "../Songs/sakuranbo";
-
-const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
-
-// When selecting a profile you have to input correct details to enter
-
-function SongChoice(props) {
-
-  const { item, navigation} = props;
-  console.log(songSelections)
+import { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+import { styles } from '../Styles.js';
+import { signIn } from '../auth/AuthManager';
 
 
+function ProfileChoice({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
-    <View style={styles.listItemContainer}>
-      <ImageBackground source={item.albumArt} style={{ width: 50, height: 50 }} imageStyle={{resizeMode: 'stretch'}}> </ImageBackground>
-      <TouchableOpacity onPress={() => navigation.navigate('LyricsView', { song: item })}> 
-         <Text>{item.title}</Text>
-    </TouchableOpacity>
+    <View style={styles.loginContainer}>
+      <Text style={styles.loginHeaderText}>Sign In</Text>
+      <View style={styles.loginRow}>
+        <View style={styles.loginLabelContainer}>
+          <Text style={styles.loginLabelText}>Email: </Text>
+        </View>
+        <View style={styles.loginInputContainer}>
+          <TextInput 
+            style={styles.loginInputBox}
+            placeholder='enter email address' 
+            autoCapitalize='none'
+            spellCheck={false}
+            onChangeText={text=>setEmail(text)}
+            value={email}
+          />
+        </View>
+      </View>
+      <View style={styles.loginRow}>
+        <View style={styles.loginLabelContainer}>
+          <Text style={styles.loginLabelText}>Password: </Text>
+        </View>
+        <View style={styles.loginInputContainer}>
+          <TextInput 
+            style={styles.loginInputBox}
+            placeholder='enter password' 
+            autoCapitalize='none'
+            spellCheck={false}
+            secureTextEntry={true}
+            onChangeText={text=>setPassword(text)}
+            value={password}
+          />
+        </View>
+      </View>
+      <View style={styles.loginRow}>
+
+        <Button
+          onPress={async () => {
+            try {
+              await signIn(email, password);
+              navigation.navigate("Home");
+            } catch(error) {
+              Alert.alert("Sign In Error", error.message,[{ text: "OK" }])
+            }
+          }}
+          title="Sign In"
+        />   
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  listItemContainer: {
-    width: '100%',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    padding: '1%',
-  },
-});
-
-export default SongChoice;
+export default ProfileChoice;

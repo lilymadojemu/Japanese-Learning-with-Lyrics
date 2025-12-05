@@ -1,11 +1,14 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View} from "react-native";
 import ProfileChoice from "../Components/profileChoice";
-// import profile info from firebase???
+import { styles } from '../Styles.js';
 
 
 function LoginScreen(props) {
 
-  const { navigation} = props;
+  const {navigation} = props;
+
+  const [loginMode, setLoginMode] = useState(true);
+
 
   return(
     <View style={styles.container}>
@@ -21,15 +24,16 @@ function LoginScreen(props) {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   profiles: {
-    flexDirection: row
+    flexDirection: "row"
   }
 });
 

@@ -4,8 +4,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import { CLIENT_ID, CLIENT_SECRET } from "../Secrets";
-
 // Songs
 import { Lilac } from "../Songs/Lilac";
 import { SpringOfLife } from "../Songs/springOfLife";

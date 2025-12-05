@@ -1,4 +1,6 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, TouchableOpacity, Alert } from "react-native";
+import { signOut } from '../auth/AuthManager';
+
 import SongChoice from "../Components/songChoice";
 
 // Song
@@ -17,6 +19,7 @@ function SongSelectionScreen(props) {
   return(
     <View style={styles.container}>
       <View>
+        <Text> Welcome! </Text>
         <FlatList
           data={songSelections}
           renderItem={({item})=>{
@@ -26,6 +29,17 @@ function SongSelectionScreen(props) {
             );
           }}
         />
+        <TouchableOpacity 
+        onPress={async () => {
+          try {
+            await signOut();
+            navigation.navigate('Login');
+          } catch (error) {
+            Alert.alert("Sign Out Error", error.message,[{ text: "OK" }])
+          }
+        }}>
+          Sign Out
+        </TouchableOpacity>
       </View>
     </View>
   );

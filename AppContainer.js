@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Provider } from 'react-redux';
 
-import LyricVisualizerScreen from './Screens/lyricVisualizer';
+import LyricVisualizerScreen from './Screens/LyricVisualizer';
 import SongSelectionScreen from './Screens/songSelection';
 import VocabReviewScreen from './Screens/vocabReview';
 import LoginScreen from './Screens/logIn'
