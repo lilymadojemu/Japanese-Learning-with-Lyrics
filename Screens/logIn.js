@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { subscribeToAuthChanges } from '../auth/AuthManager';
-import SignInBox from '../components/SignInBox';
-import SignUpBox from '../components/SignUpBox';
+import SignInBox from '../Components/SignInBox';
+import SignUpBox from '../Components/SignUpBox';
 
 
 

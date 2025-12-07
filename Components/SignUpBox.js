@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../auth/AuthManager';
-import { addUser } from '../features/userSlice';
+import { addUserThunk } from '../Features/flashcardSlice';
 import {Button } from '@rneui/base';
 
 
@@ -15,8 +15,7 @@ function SignUpBox({ navigation }) {
   const handleSignUp = async () => {
     try {
       const authUser = await signUp(displayName, email, password);
-      dispatch(addUser(authUser));
-      // Navigation will happen automatically via subscribeToAuthChanges
+      await dispatch(addUserThunk(authUser));
     } catch (error) {
       Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
     }
@@ -78,14 +77,7 @@ function SignUpBox({ navigation }) {
       <View style={styles.loginRow}>
 
         <Button
-          onPress={async () => {
-            try {
-              await signUp(email, password);
-              navigation.navigate("Tabs");
-            } catch(error) {
-              Alert.alert("Sign Up Error", error.message,[{ text: "OK" }])
-            }
-          }}
+          onPress={handleSignUp}
         >
           Sign Up
         </Button>  

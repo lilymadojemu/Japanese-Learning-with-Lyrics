@@ -20,8 +20,17 @@ function LyricVisualizerScreen(props) {
   console.log (song)
   // loop through each character/word in a sentence
   // Once you press character/word in 
+
+
   return(
     <View style={styles.container}>
+        {/* // Go back to home screen (songSelection.js) */}
+        <Text
+              style={{ fontSize: 20, color: 'blue' }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+        >Back</Text>
       <View style={styles.listContainer}>
       <FlatList
         data={song.lyrics}

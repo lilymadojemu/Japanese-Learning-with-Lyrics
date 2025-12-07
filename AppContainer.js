@@ -52,7 +52,7 @@ function AppContainer() {
         <Stack.Navigator initialRouteName='Login' screenOptions={{ title: 'Learning with Lyrics', headerShown: false }} >
           <Stack.Screen name='Login' component={LoginScreen}/>
           <Stack.Screen name='Tabs' component={MyTabs} options={{ headerShown: false }} />
-          <Stack.Screen name='LyricsView' component={LyricVisualizerScreen}/>
+          <Stack.Screen name='LyricsView' component={LyricVisualizerScreen} options={{ headerShown: true }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -51,7 +51,7 @@ export const addFlashcardThunk = createAsyncThunk(
     
     const flashcardRef = await addDoc(collection(db, 'flashcards'), {
       text: flashcardText,
-      userId: userId,  // ✅ Add this
+      userId: userId, 
       time: null,
       suspendedUntil: null,
       furigana: null,
@@ -102,17 +102,37 @@ export const updateFlashcardThunk = createAsyncThunk(
     return { ...item, time: timeSelect };
   }
 );
-
+// Add a new user profile
+export const addUserThunk = createAsyncThunk(
+  'flashcards/addUser',
+  async (authUser) => {
+    const userToAdd = {
+      email: authUser.email,
+    };
+    try {
+      // Use setDoc with the user's UID as the document ID
+      await setDoc(doc(db, 'users', authUser.uid), userToAdd);
+      return { ...userToAdd, key: authUser.uid };
+    } catch (e) {
+      console.log('Error adding user to Firestore:', e);
+      throw e;
+    }
+  }
+);
 export const flashcardSlice = createSlice({
   name: 'flashcards',
   initialState: {
     value: [],
+    currentUser: null
   },
 
   reducers: {},
 
   extraReducers: (builder) => {
     builder
+      .addCase(addUserThunk.fulfilled, (state, action) => {
+        state.users = [...state.users, action.payload]
+      })
       .addCase(getFlashcardsThunk.fulfilled, (state, action) => {
         state.value = action.payload;
       })
@@ -132,6 +152,7 @@ export const flashcardSlice = createSlice({
           elem => elem.key === action.payload.key ? action.payload : elem
         );
       });
+      
   }
 });
 

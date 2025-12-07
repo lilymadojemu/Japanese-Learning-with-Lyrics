@@ -62,6 +62,7 @@ const signOut = async () => {
 const signUp = async (displayName, email, password) => {
   const userCred = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(userCred.user, {displayName: displayName});
+  return userCred.user; 
 }
 
 
