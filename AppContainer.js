@@ -49,7 +49,7 @@ function AppContainer() {
     <Provider store={store}>
       <NavigationContainer>
         <AuthListener /> 
-        <Stack.Navigator initialRouteName='Login' screenOptions={{ title: 'Lyric Study' }}>
+        <Stack.Navigator initialRouteName='Login' screenOptions={{ title: 'Learning with Lyrics', headerShown: false }} >
           <Stack.Screen name='Login' component={LoginScreen}/>
           <Stack.Screen name='Tabs' component={MyTabs} options={{ headerShown: false }} />
           <Stack.Screen name='LyricsView' component={LyricVisualizerScreen}/>

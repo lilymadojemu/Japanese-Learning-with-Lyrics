@@ -18,11 +18,20 @@ function SongSelectionScreen(props) {
 
   const {navigation} = props;
 
+  
+// Source - https://stackoverflow.com/a
+// Posted by Steve Harrison, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-12-06, License - CC BY-SA 4.0
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
+
   return(
     <View style={styles.container}>
       <View>
         <Text>
-          Welcome, {getAuthUser()?.displayName}!
+          Welcome, {capitalizeFirstLetter(getAuthUser().email.split('@')[0])}!
         </Text>
         <FlatList
           data={songSelections}
@@ -33,7 +42,8 @@ function SongSelectionScreen(props) {
             );
           }}
         />
-        <Button
+
+      <Button
         title="Sign Out"
         onPress={async () => {
           await signOut();
