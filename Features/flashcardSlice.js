@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getAuthUser } from '../auth/AuthManager'; 
+
 
 import { firebaseConfig } from "../Secrets";
 import { initializeApp } from 'firebase/app';
@@ -7,6 +9,7 @@ import {
   collection, 
   query,
   doc, 
+  where,
   getDocs, 
   updateDoc, 
   addDoc, 
@@ -20,9 +23,15 @@ const db = getFirestore(app);
 export const getFlashcardsThunk = createAsyncThunk(
   'flashcards/getFlashcards',
   async () => {
+    const userId = getAuthUser()?.uid; 
+
     const initList = [];
     const collRef = collection(db, 'flashcards');
-    const q = query(collRef);
+    const q = query(
+      collRef,
+      where('userId', '==', userId)
+    );
+
     const querySnapshot = await getDocs(q);
     querySnapshot.docs.forEach((docSnapshot) => {
       const flashcard = docSnapshot.data();
@@ -38,23 +47,25 @@ export const getFlashcardsThunk = createAsyncThunk(
 export const addFlashcardThunk = createAsyncThunk(
   'flashcards/addFlashcard',
   async (flashcardText) => {
-    const timeStamp = Date.now();
-    const collRef = collection(db, 'flashcards');
-    const snap = await addDoc(collRef, { 
+    const userId = getAuthUser()?.uid; // Get current user ID
+    
+    const flashcardRef = await addDoc(collection(db, 'flashcards'), {
       text: flashcardText,
-      time: timeStamp,
+      userId: userId,  // ✅ Add this
+      time: null,
       suspendedUntil: null,
       furigana: null,
-      englishText: null
+      englishText: null,
     });
 
-    return { 
-      key: snap.id, 
+    return {
+      key: flashcardRef.id,
       text: flashcardText,
-      time: timeStamp,
+      userId: userId,  // ✅ Add this
+      time: null,
       suspendedUntil: null,
       furigana: null,
-      englishText: null
+      englishText: null,
     };
   }
 );

@@ -1,5 +1,7 @@
-import { StyleSheet, View, FlatList, TouchableOpacity, Alert } from "react-native";
-import { signOut } from '../auth/AuthManager';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from "react-native";
+import { signOut, getAuthUser } from '../auth/AuthManager';
+import {Button } from '@rneui/base';
+
 
 import SongChoice from "../Components/songChoice";
 
@@ -14,12 +16,14 @@ const songSelections = [Lilac, SpringOfLife, PrayerX, RightNow, Sakuranbo]
 
 function SongSelectionScreen(props) {
 
-  const { navigation} = props;
+  const {navigation} = props;
 
   return(
     <View style={styles.container}>
       <View>
-        <Text> Welcome! </Text>
+        <Text>
+          Welcome, {getAuthUser()?.displayName}!
+        </Text>
         <FlatList
           data={songSelections}
           renderItem={({item})=>{
@@ -29,17 +33,12 @@ function SongSelectionScreen(props) {
             );
           }}
         />
-        <TouchableOpacity 
+        <Button
+        title="Sign Out"
         onPress={async () => {
-          try {
-            await signOut();
-            navigation.navigate('Login');
-          } catch (error) {
-            Alert.alert("Sign Out Error", error.message,[{ text: "OK" }])
-          }
-        }}>
-          Sign Out
-        </TouchableOpacity>
+          await signOut();
+        }}
+      />
       </View>
     </View>
   );

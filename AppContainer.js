@@ -1,10 +1,12 @@
+import { useEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native'; 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Provider } from 'react-redux';
+import { subscribeToAuthChanges } from './auth/AuthManager';
 
-import LyricVisualizerScreen from './Screens/LyricVisualizer';
+import LyricVisualizerScreen from './Screens/lyricVisualizer';
 import SongSelectionScreen from './Screens/songSelection';
 import VocabReviewScreen from './Screens/vocabReview';
 import LoginScreen from './Screens/logIn'
@@ -32,11 +34,22 @@ function MyTabs() {
   );
 }
 
+function AuthListener() {
+  const navigation = useNavigation();
+  
+  useEffect(() => {
+    subscribeToAuthChanges(navigation);
+  }, []);
+
+  return null; // This component just sets up the listener
+}
+
 function AppContainer() {
   return( 
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Tabs' screenOptions={{ title: 'Lyric Study' }}>
+        <AuthListener /> 
+        <Stack.Navigator initialRouteName='Login' screenOptions={{ title: 'Lyric Study' }}>
           <Stack.Screen name='Login' component={LoginScreen}/>
           <Stack.Screen name='Tabs' component={MyTabs} options={{ headerShown: false }} />
           <Stack.Screen name='LyricsView' component={LyricVisualizerScreen}/>
